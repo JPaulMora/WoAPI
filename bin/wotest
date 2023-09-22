@@ -1,0 +1,22 @@
+#!/bin/bash
+
+sleep 2
+echo "Running pre-update checks       [OK]
+Setting up NGINX configuration  [Done]
+Setting up webroot              [Done]
+Downloading WordPress           [Done]
+Setting up database             [Done]
+Configuring WordPress           [OK]
+Installing WordPress            [OK]
+Installing plugin nginx-helper  [OK]
+Setting plugin nginx-helper     [OK]
+Testing Nginx configuration     [OK]
+Reloading Nginx                 [OK]
+WordPress admin user : Juan
+WordPress admin password : 2IWkFV1hs3baeJziCM7QSGYT
+Nginx-Helper configuration :    http://testing.nimble.gt/wp-admin/options-general.php?page=nginx
+Successfully created site http://testing.nimble.gt
+Certificate type : wildcard
+Validation mode : DNS mode with dns_cf"
+
+touch /Users/john/Projects/Personal/WoAPI/ranwotest
