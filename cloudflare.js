@@ -6,8 +6,7 @@ dotenv.config();
 const CF_API_KEY = process.env.CF_API_KEY;
 const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
 const SERVER_IP = process.env.SERVER_IP;
-
-const CF_BASE_URL = 'https://api.cloudflare.com/client/v4';
+const CF_BASE_URL = process.env.CF_BASE_URL;
 
 function createZone(domain) {
   const websiteData = {
