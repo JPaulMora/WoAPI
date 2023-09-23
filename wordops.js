@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-
+const frappe = require('./frappe.js');
 const logger = require('winston');
 
 const WORDOPS_BIN = 'wotest';
@@ -21,6 +21,9 @@ function createWordpress(domain) {
       });
     });
 
+    // frappe module not included for security concerns
+    frappe.updateSiteStatus(domain, nimble_pass=adminPass, stderr=res2.stderr)
+
     woProcess.stderr.on('data', (data) => {
       logger.error(data.toString());
     });
@@ -35,13 +38,16 @@ function createWordpress(domain) {
   });
 }
 
-async function createAdminUser(domain) {
+async function createAdminUser(domain, email) {
   try {
     // Run wp-cli to create an admin user
-    const createAdminCmd = [WP_BIN, 'user', 'create', 'Nimble',
-      'juanluis.e@nimble.gt', '--role=administrator', '--allow-root',
+    const createAdminArgs = ['user', 'create', 'Nimble',
+      email, '--role=administrator', '--allow-root',
       `--path=/var/www/${domain}/htdocs`];
-    const { stdout, stderr } = await runCommand(createAdminCmd);
+    const {stdout, stderr} = await runCommand(WP_BIN, createAdminArgs);
+    if (stderr !== "") {
+      logger.error(stderr);
+    }
     return stdout.trim();
   } catch (error) {
     logger.error(error.message);
@@ -49,8 +55,9 @@ async function createAdminUser(domain) {
   }
 }
 
-async function runCommand(command) {
-    const childProcess = spawn(command[0], command.slice(1), {
+async function runCommand(command, args) {
+  return new Promise((resolve) => {
+    const childProcess = spawn(command, args, {
       stdio:
         'pipe'
     });
@@ -66,12 +73,10 @@ async function runCommand(command) {
     });
 
     childProcess.on('close', (code) => {
-      if (code === 0) {
-        resolve({ stdout, stderr });
-      } else {
-        reject(new Error(`Process exited with code ${code}`));
-      }
+      logger.info("Return code was: ${code}");
+      resolve({ stdout, stderr });
     });
+  });
 }
 
 module.exports = { createWordpress, createAdminUser };

@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const wo = require('./wordops');
 
@@ -11,8 +10,7 @@ dotenv.config();
 const DEV_DOMAIN = process.env.DEV_DOMAIN;
 const CF_DEFAULT_ZONE = process.env.CF_DEFAULT_ZONE;
 
-app.use(bodyParser.json());
-
+app.use(express.json())
 
 // Testing
 app.get('/tasks', (req, res) => {
@@ -35,7 +33,8 @@ app.post('/website/create', async (req, res) => {
 
 app.post('/website/adminuser', async (req, res) => {
   const ws = req.body;
-  
+  res.json(true);
+  wo.createAdminUser(ws.domain, ws.email);
 });
 
 app.post('/domain/create', async (req, res) => {

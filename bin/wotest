@@ -19,4 +19,4 @@ Successfully created site http://testing.nimble.gt
 Certificate type : wildcard
 Validation mode : DNS mode with dns_cf"
 
-touch /Users/john/Projects/Personal/WoAPI/ranwotest
+echo $@ > /Users/john/Projects/Personal/WoAPI/ranwotest.log

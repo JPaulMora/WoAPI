@@ -2,3 +2,4 @@
 
 sleep 1
 echo "VAIO3J4ODSVJOI"
+echo $@ > /Users/john/Projects/Personal/WoAPI/wptest.log
